@@ -1,0 +1,13 @@
+{% extends "main/base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Добро пожаловать в FlowerDelivery!</h1>
+    <p class="lead">Ваш лучший выбор для быстрой и качественной доставки цветов.</p>
+    <hr class="my-4">
+    <p>Ознакомьтесь с нашим каталогом цветов и закажите уже сегодня!</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'catalog' %}" role="button">Перейти к каталогу</a>
+</div>
+{% endblock %}
