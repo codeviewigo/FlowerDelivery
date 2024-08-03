@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<h1>Корзина</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Товар</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Итого</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                <button class="btn btn-sm btn-outline-secondary update-cart" data-product-id="{{ item.product.id }}" data-action="decrease">-</button>
+                <span>{{ item.quantity }}</span>
+                <button class="btn btn-sm btn-outline-secondary update-cart" data-product-id="{{ item.product.id }}" data-action="increase">+</button>
+            </td>
+            <td>{{ item.total_price }}</td>
+            <td>
+                <button class="btn btn-sm btn-danger remove-from-cart" data-product-id="{{ item.product.id }}">Удалить</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Общая сумма</td>
+            <td>{{ cart.get_total_price }}</td>
+        </tr>
+    </tfoot>
+</table>
+<a href="{% url 'catalog:catalog' %}" class="btn btn-primary">Продолжить покупки</a>
+<a href="#" class="btn btn-success">Оформить заказ</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.update-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            const action = this.getAttribute('data-action');
+            updateCart(productId, action);
+        });
+    });
+
+    document.querySelectorAll('.remove-from-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            updateCart(productId, 'remove');
+        });
+    });
+
+    function updateCart(productId, action) {
+        fetch('{% url "cart:cart_update" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({
+                'product_id': productId,
+                'action': action,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                location.reload();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -2,6 +2,11 @@
 
 {% block title %}Регистрация{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{% url 'users:register' %}">Регистрация пользователя</a></li>
+{% endblock %}
+
+
 {% block content %}
 <h2>Регистрация</h2>
 <form method="post">

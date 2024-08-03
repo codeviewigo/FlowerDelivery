@@ -2,6 +2,11 @@
 
 {% block title %}Вход{% endblock %}
 
+{% block breadcrumbs %}
+<li class="breadcrumb-item"><a href="{% url 'users:login' %}">Вход</a></li>
+{% endblock %}
+
+
 {% block content %}
 <h2>Вход</h2>
 <form method="post">
@@ -9,4 +14,6 @@
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Войти</button>
 </form>
+<a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
+
 {% endblock %}

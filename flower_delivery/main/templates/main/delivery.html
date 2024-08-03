@@ -2,6 +2,11 @@
 
 {% block title %}Доставка{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{% url 'main:delivery' %}">Доставка</a></li>
+{% endblock %}
+
+
 {% block content %}
 <h2>Доставка</h2>
 <p>Мы доставляем цветы по городу в течение 2 часов с момента заказа. Ознакомьтесь с условиями доставки и сделайте заказ уже сегодня!</p>

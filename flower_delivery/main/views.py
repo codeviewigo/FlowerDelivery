@@ -6,7 +6,7 @@ def home(request):
 
 
 def about(request):
-    return render(request, 'main/about.html')
+    return render(request, 'main/contacts.html')
 
 
 def delivery(request):

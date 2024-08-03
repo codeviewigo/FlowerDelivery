@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block breadcrumbs %}
+<li class="breadcrumb-item"><a href="{% url 'catalog:catalog' %}">Каталог</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+            <h3>{{ product.price }} руб.</h3>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-outline-secondary btn-sm" id="decrease-quantity">-</button>
+                <input type="number" id="quantity" value="1" min="1" class="form-control mx-2" style="width: 60px;">
+                <button class="btn btn-outline-secondary btn-sm" id="increase-quantity">+</button>
+            </div>
+            <button class="btn btn-success mt-3" id="add-to-cart" data-product-id="{{ product.id }}">Добавить в корзину</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const decreaseButton = document.getElementById('decrease-quantity');
+    const increaseButton = document.getElementById('increase-quantity');
+    const quantityInput = document.getElementById('quantity');
+    const addToCartButton = document.getElementById('add-to-cart');
+
+    decreaseButton.addEventListener('click', function() {
+        let quantity = parseInt(quantityInput.value);
+        if (quantity > 1) {
+            quantity--;
+            quantityInput.value = quantity;
+        }
+    });
+
+    increaseButton.addEventListener('click', function() {
+        let quantity = parseInt(quantityInput.value);
+        quantity++;
+        quantityInput.value = quantity;
+    });
+
+    addToCartButton.addEventListener('click', function() {
+        const productId = this.getAttribute('data-product-id');
+        const quantity = parseInt(quantityInput.value);
+        addToCart(productId, quantity);
+    });
+
+    function addToCart(productId, quantity) {
+        fetch('{% url "cart:cart_add_with_quantity" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({
+                'product_id': productId,
+                'quantity': quantity,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                location.reload();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
