@@ -11,4 +11,9 @@
 <h2>Профиль</h2>
 <p>Имя пользователя: {{ user.username }}</p>
 <p>Email: {{ user.email }}</p>
+
+{% if user.is_staff %}
+    <a href="{% url 'admin:index' %}" >Панель администратора</a>
+{% endif %}
+
 {% endblock %}

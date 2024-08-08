@@ -3,16 +3,23 @@ from django.conf import settings
 from catalog.models import Product
 
 class Order(models.Model):
+    STATUS_CHOICES = [
+        ('created', 'Не оплачен'),
+        ('paid', 'Оплачен'),
+        ('in_progress', 'В работе'),
+        ('completed', 'Выполнен'),
+        ('cancelled', 'Отменен'),
+    ]
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    paid = models.BooleanField(default=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
     city = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')
 
     class Meta:
         ordering = ('-created',)
