@@ -43,7 +43,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
                     <a class="dropdown-item" href="{% url 'users:profile' %}">Учетная запись</a>
-                    <a class="dropdown-item" href="#">Заказы</a>
+                    <a class="dropdown-item" href="{% url 'orders:user_orders' %}">Заказы</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a>
                 </div>
@@ -68,6 +68,94 @@
 <div class="container mt-4">
     {% block content %}{% endblock %}
 </div>
+
+
+
+<footer class="bg-body-tertiary text-center">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!-- Section: Images -->
+    <section class="">
+      <div class="row">
+        <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+          <div data-mdb-ripple-init
+            class="bg-image hover-overlay shadow-1-strong rounded"
+            data-ripple-color="light"
+          >
+            <img src="https://avatars.mds.yandex.net/i?id=f486449aadd0803831c00017b63c000f00721036-12305303-images-thumbs&n=13" class="w-100" />
+            <a href="#!">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+          <div data-mdb-ripple-init
+            class="bg-image hover-overlay shadow-1-strong rounded"
+            data-ripple-color="light"
+          >
+            <img src="https://avatars.mds.yandex.net/i?id=290d7590ffa0a619334f397312c17e2a-5173358-images-thumbs&n=13" class="w-100" />
+            <a href="#!">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+          <div data-mdb-ripple-init
+            class="bg-image hover-overlay shadow-1-strong rounded"
+            data-ripple-color="light"
+          >
+            <img src="https://gorodprizrak.com/wp-content/uploads/2023/06/3adb7e514defe2e2379cccf4ba6d9bd9.jpg" class="w-100" />
+            <a href="#!">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+          <div data-mdb-ripple-init
+            class="bg-image hover-overlay shadow-1-strong rounded"
+            data-ripple-color="light"
+          >
+            <img src="https://static.trendme.net/pictures/items/flores_Plantas-dehti-full-6854-1375834.png" class="w-100" />
+            <a href="#!">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+          <div data-mdb-ripple-init
+            class="bg-image hover-overlay shadow-1-strong rounded"
+            data-ripple-color="light"
+          >
+            <img src="https://i.pinimg.com/originals/7d/12/a3/7d12a3c5ada02978fc13f2f8fe4ad486.png" class="w-100" />
+            <a href="#!">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+          <div data-mdb-ripple-init
+            class="bg-image hover-overlay shadow-1-strong rounded"
+            data-ripple-color="light"
+          >
+            <img src="https://kubinka.flo-allo.ru/wa-data/public/shop/products/12/06/612/images/1137/1137.970.jpg" class="w-100" />
+            <a href="#!">
+              <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: Images -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2024 Copyright:
+    <a class="text-body" href="https://github.com/codeviewigo/codeviewigo">codeviewigo BASIC</a>
+  </div>
+  <!-- Copyright -->
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

@@ -15,13 +15,16 @@
         </div>
         <div class="col-md-6">
             <h1>{{ product.name }}</h1>
-            <p>{{ product.description }}</p>
+            <h5>{{ product.short_description }}</h5>
             <h3>{{ product.price }} руб.</h3>
             <div class="d-flex align-items-center">
                 <button class="btn btn-outline-secondary btn-sm" id="decrease-quantity">-</button>
                 <input type="number" id="quantity" value="1" min="1" class="form-control mx-2" style="width: 60px;">
                 <button class="btn btn-outline-secondary btn-sm" id="increase-quantity">+</button>
             </div>
+            <p class="card-text">{{ product.full_description }}</p>
+
+
             <button class="btn btn-success mt-3" id="add-to-cart" data-product-id="{{ product.id }}">Добавить в корзину</button>
         </div>
     </div>

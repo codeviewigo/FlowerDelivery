@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1>Каталог товаров</h1>
+    <h1>Наши букеты</h1>
     <div class="row">
         {% for product in page_obj %}
         <div class="col-md-4">
@@ -19,7 +19,13 @@
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
+                    <h6 class="ard-subtitle mb-2 text-body-secondary">{{ product.short_description }}</h6>
                     <p class="card-text">{{ product.price }} руб.</p>
+                    {% if product.quantity == 0 %}
+                        <p class="card-text" style="color: red;">Нет в наличии</p>
+                    {% else %}
+                        <p class="card-text">В наличии:{{ product.quantity }}</p>
+                    {% endif %}
                     <a href="{% url 'catalog:product' product.pk %}" class="btn btn-primary">Подробнее</a>
                 </div>
             </div>

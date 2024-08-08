@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h2>Мои заказы</h2>
+    {% if orders %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID заказа</th>
+                    <th>Дата</th>
+                    <th>Статус оплаты</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.created }}</td>
+                        <td>{{ order.paid|yesno:"Оплачено,Не оплачено" }}</td>
+                        <td>{{ order.get_total_cost }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>У вас нет заказов.</p>
+    {% endif %}
+{% endblock %}

@@ -39,7 +39,7 @@
     </tfoot>
 </table>
 <a href="{% url 'catalog:catalog' %}" class="btn btn-primary">Продолжить покупки</a>
-<a href="#" class="btn btn-success">Оформить заказ</a>
+<a href="{% url 'orders:order_create' %}" class="btn btn-success">Оформить заказ</a>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
