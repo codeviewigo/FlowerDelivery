@@ -38,7 +38,7 @@ def order_create(request):
     else:
         form = OrderCreateForm()
 
-    return render(request, 'orders/order_create.html', {'cart': cart, 'form': form, 'default_date': date.today().strftime('%Y-%m-%d')})
+    return render(request, 'orders/order_create.html', {'cart': cart, 'form': form})
 
 
 @login_required
@@ -57,5 +57,3 @@ def user_orders_detail(request, pk):
     }
 
     return render(request, 'orders/user_orders_detail.html', context=context)
-
-
