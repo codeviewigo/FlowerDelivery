@@ -1,3 +1,7 @@
+from datetime import date
+
+from asgiref.sync import sync_to_async, async_to_sync
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import OrderItem
@@ -6,6 +10,8 @@ from cart.cart import Cart
 from .models import Order
 # from telegram_bot.bot import send_order_notification
 import asyncio
+
+from telegram_bot.bot import send_order_notification
 
 
 @login_required
@@ -24,14 +30,15 @@ def order_create(request):
                     price=item['price'],
                     quantity=item['quantity']
                 )
-            cart.clear()
 
-            # send_order_notification(order)
+            send_order_notification(order, cart)
+            cart.clear()
 
             return render(request, 'orders/order_created.html', {'order': order})
     else:
         form = OrderCreateForm()
-    return render(request, 'orders/order_create.html', {'cart': cart, 'form': form})
+
+    return render(request, 'orders/order_create.html', {'cart': cart, 'form': form, 'default_date': date.today().strftime('%Y-%m-%d')})
 
 
 @login_required
@@ -50,3 +57,5 @@ def user_orders_detail(request, pk):
     }
 
     return render(request, 'orders/user_orders_detail.html', context=context)
+
+

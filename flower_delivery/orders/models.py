@@ -16,10 +16,13 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(blank=True)
     address = models.CharField(max_length=250)
-    city = models.CharField(max_length=100)
+    delivery_date = models.DateField(default='2022-01-01')
+    delivery_time = models.TimeField(default='10:00:00')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')
+    comment = models.TextField(blank=True)
 
     class Meta:
         ordering = ('-created',)
