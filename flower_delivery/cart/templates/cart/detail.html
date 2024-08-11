@@ -18,7 +18,7 @@
     <tbody>
         {% for item in cart %}
         <tr>
-            <td>{{ item.product.name }}</td>
+            <td><a href="{% url 'catalog:product' item.product.id %}">{{ item.product.name }}</a></td>
             <td>
                 <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
             </td>

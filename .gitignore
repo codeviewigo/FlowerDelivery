@@ -1,1 +1,8 @@
 /flower_delivery/db.sqlite3
+/flower_delivery/cart/migrations/
+/flower_delivery/catalog/migrations/
+/flower_delivery/main/migrations/
+/flower_delivery/orders/migrations/
+/flower_delivery/telegram_bot/migrations/
+/flower_delivery/users/migrations/
+/flower_delivery/.env

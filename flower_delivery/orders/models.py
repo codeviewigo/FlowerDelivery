@@ -1,6 +1,11 @@
+import datetime
+
 from django.db import models
+from django.core.validators import validate_email, RegexValidator
+
 from django.conf import settings
 from catalog.models import Product
+
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -16,10 +21,13 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=20, blank=True)
-    email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=20, blank=False, validators=[RegexValidator(
+        regex=r'^\+7\d{10}$',
+        message="Номер телефона должен быть в формате: '+79991234567'."
+    )])
+    email = models.EmailField(blank=True, validators=[validate_email])
     address = models.CharField(max_length=250)
-    delivery_date = models.DateField(default='2022-01-01')
+    delivery_date = models.DateField(default=datetime.date.today)
     delivery_time = models.TimeField(default='10:00:00')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='created')
     comment = models.TextField(blank=True)
@@ -32,6 +40,7 @@ class Order(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
