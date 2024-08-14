@@ -8,16 +8,17 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('catalog', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Product',
+            name='Order',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('image', models.ImageField(upload_to='products/')),
+                ('status', models.CharField(choices=[('pending', 'Pending'), ('shipped', 'Shipped'), ('delivered', 'Delivered')], max_length=50)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('products', models.ManyToManyField(to='catalog.product')),
             ],
         ),
     ]
