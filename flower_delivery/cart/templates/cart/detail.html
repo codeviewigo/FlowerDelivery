@@ -6,81 +6,93 @@
 <h1>Корзина</h1>
 <table class="table">
     <thead>
-        <tr>
-            <th>Товар</th>
-            <th>Изображение</th>
-            <th>Цена</th>
-            <th>Количество</th>
-            <th>Итого</th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>Товар</th>
+        <th>Изображение</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Итого</th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-        {% for item in cart %}
-        <tr>
-            <td><a href="{% url 'catalog:product' item.product.id %}">{{ item.product.name }}</a></td>
-            <td>
-                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
-            </td>
-            <td>{{ item.price }}</td>
-            <td>
-                <button class="btn btn-sm btn-outline-secondary update-cart" data-product-id="{{ item.product.id }}" data-action="decrease">-</button>
-                <span>{{ item.quantity }}</span>
-                <button class="btn btn-sm btn-outline-secondary update-cart" data-product-id="{{ item.product.id }}" data-action="increase">+</button>
-            </td>
-            <td>{{ item.total_price }}</td>
-            <td>
-                <button class="btn btn-sm btn-danger remove-from-cart" data-product-id="{{ item.product.id }}">Удалить</button>
-            </td>
-        </tr>
-        {% endfor %}
+    {% for item in cart %}
+    <tr>
+        <td><a href="{% url 'catalog:product' item.product.id %}">{{ item.product.name }}</a></td>
+        <td>
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
+        </td>
+        <td>{{ item.price }}</td>
+        <td>
+            <button class="btn btn-sm btn-outline-secondary update-cart" data-product-id="{{ item.product.id }}"
+                    data-action="decrease">-
+            </button>
+            <span>{{ item.quantity }}</span>
+            <button class="btn btn-sm btn-outline-secondary update-cart" data-product-id="{{ item.product.id }}"
+                    data-action="increase">+
+            </button>
+        </td>
+        <td>{{ item.total_price }}</td>
+        <td>
+            <button class="btn btn-sm btn-danger remove-from-cart" data-product-id="{{ item.product.id }}">Удалить
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
     </tbody>
     <tfoot>
-        <tr>
-            <td colspan="3">Общая сумма</td>
-            <td>{{ cart.get_total_price }}</td>
-        </tr>
+    <tr>
+        <td colspan="3">Общая сумма</td>
+        <td>{{ cart.get_total_price }}</td>
+    </tr>
     </tfoot>
 </table>
 <a href="{% url 'catalog:catalog' %}" class="btn btn-primary">Продолжить покупки</a>
+{% if user.is_authenticated %}
 <a href="{% url 'orders:order_create' %}" class="btn btn-success">Оформить заказ</a>
+{% else %}
+<div class="alert alert-primary" role="alert">
+    Для оформления заказа необходимо <a href="{% url 'users:login' %}">авторизоваться</a>
+</div>
+{% endif %}
+
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.update-cart').forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product-id');
-            const action = this.getAttribute('data-action');
-            updateCart(productId, action);
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.update-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                const action = this.getAttribute('data-action');
+                updateCart(productId, action);
+            });
         });
-    });
 
-    document.querySelectorAll('.remove-from-cart').forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product-id');
-            updateCart(productId, 'remove');
+        document.querySelectorAll('.remove-from-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                updateCart(productId, 'remove');
+            });
         });
-    });
 
-    function updateCart(productId, action) {
-        fetch('{% url "cart:cart_update" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}',
-            },
-            body: JSON.stringify({
-                'product_id': productId,
-                'action': action,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'ok') {
-                location.reload();
-            }
-        });
-    }
-});
+        function updateCart(productId, action) {
+            fetch('{% url "cart:cart_update" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({
+                    'product_id': productId,
+                    'action': action,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    location.reload();
+                }
+            });
+        }
+    });
 </script>
 {% endblock %}
